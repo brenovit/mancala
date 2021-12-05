@@ -1,9 +1,3 @@
-var routes = [
-    { path:'/', component: Home },
-    { path:'/join', component: JoinGame },
-    { path:'/create', component: CreateGame }
- ];
-
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHashHistory(),
     routes,

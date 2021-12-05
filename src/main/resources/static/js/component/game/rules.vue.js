@@ -1,5 +1,6 @@
 const RulesGame = {
     template: `
+    <h1>Rules</h1>
     <div>
     <pre>
 1. At the beginning of the game, four seeds are placed in each house. This is the traditional method.

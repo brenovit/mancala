@@ -13,9 +13,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <!--    end libs for stomp and sockjs-->
+    <script src="https://unpkg.com/vue@3.2.23"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
+  <div id="app">
+    {{ message }}
+  </div>
     <header>
     <ul>
         <li><a href="#">Home</a></li>
@@ -53,6 +57,8 @@
     <div class="pot" id="mt"></div>
   </div>
 </div>
+<script src="vue-setup.js"></script>
 <script src="script.js"></script>
+
 </body>
 </html>

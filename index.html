@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Mancala</title>
+    <!--    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet">    -->
+    <link href="style.css" rel="stylesheet"></link>
+    <!--    libs for stomp and sockjs-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <!--    end libs for stomp and sockjs-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <header>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Join Game</a></li>
+        <li><a href="#">Create Game</a> </li>
+        <li><a href="#">Your Active Games</a></li>
+        <li class="float-right"><a href="#">user-name</a></li>
+      </ul>
+        <h1 class="game-name"> Game Name | id Z created by </h1>
+        </header>
+        
+<div class="board" id="board">
+  <div class="section endsection">
+    <div class="pot" id="mb"></div>
+  </div>
+  <div class="section midsection">
+    <div class="midrow topmid">
+      <div class="pot" id="pt1"></div>
+      <div class="pot" id="pt2"></div>
+      <div class="pot" id="pt3"></div>
+      <div class="pot" id="pt4"></div>
+      <div class="pot" id="pt5"></div>
+      <div class="pot" id="pt6"></div>
+    </div>
+    <div class="midrow botmid">
+      <div class="pot" id="pb6"></div>
+      <div class="pot" id="pb5"></div>
+      <div class="pot" id="pb4"></div>
+      <div class="pot" id="pb3"></div>
+      <div class="pot" id="pb2"></div>
+      <div class="pot" id="pb1"></div>
+    </div>
+  </div>
+  <div class="section endsection">
+    <div class="pot" id="mt"></div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

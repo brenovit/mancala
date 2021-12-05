@@ -21,12 +21,17 @@
       <app></app>
   </div>
 
-<!--    libs for stomp and sockjs-->
+<!-- libs for stomp and sockjs-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<!--    end libs for stomp and sockjs-->
+<!-- end libs for stomp and sockjs-->
+
+<!-- libs for vue-->
 <script src="https://unpkg.com/vue@3.2.23"></script>
 <script src="https://unpkg.com/vue-router@4.0.5/dist/vue-router.global.js"></script>
+<script src="https://unpkg.com/vuex@3.6.2/dist/vuex.js"></script>
+<!-- end libs for vue-->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script src="js/component/navbar.vue.js"></script>
@@ -41,8 +46,12 @@
 <script src="js/component/home.vue.js"></script>
 <script src="js/component/about.vue.js"></script>
 
-<script src="js/routes.js"></script>
-<script src="js/main.js"></script>
-<script src="js/script.js"></script>
+<script type="module" src="js/store.js"></script>
+
+<script type="module" src="js/utils/auth.guard.js"></script>
+<script type="module" src="js/utils/storage.js"></script>
+
+<script type="module" src="js/routes.js"></script>
+<script type="module" src="js/main.js"></script>
 </body>
 </html>

@@ -1,7 +1,5 @@
-const router = VueRouter.createRouter({
-    history: VueRouter.createWebHashHistory(),
-    routes,
-})
+import router from './routes.js'
+import store from './store.js';
 
 const app = Vue.createApp({
     components:{
@@ -12,5 +10,6 @@ const app = Vue.createApp({
 app.component('nav-bar', NavBar);
 
 app.use(router);
+app.use(store);
 
 app.mount('#app');

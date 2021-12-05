@@ -81,7 +81,13 @@ body {
   text-decoration: none;
 }
 
-.float-right {
+.nav-bar .username {
+  float: right;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+
+.nav-bar .float-right {
   float: right;
 }
 

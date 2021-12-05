@@ -1,6 +1,7 @@
 var routes = [
     { path:'/', component: Home },
-    { path:'/settings', component: Settings }
+    { path:'/join', component: JoinGame },
+    { path:'/create', component: CreateGame }
  ];
 
 const router = VueRouter.createRouter({
@@ -10,9 +11,11 @@ const router = VueRouter.createRouter({
 
 const app = Vue.createApp({
     components:{
-        'app': App
+        'app': App,
     }
 });
+
+app.component('nav-bar', NavBar);
 
 app.use(router);
 

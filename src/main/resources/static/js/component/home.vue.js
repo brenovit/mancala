@@ -1,13 +1,26 @@
 const Home = {
     template: `
     <div>
-        <p>Hello world</p>
-        <p>{{ message }}</p>
-    </div>
+    <game-rules></game-rules>
+    </div>    
     `,
     data() {
             return {
-                message: "ola testes"
+                games: [
+                    {
+                        id: 'gid1',
+                        name: 'test game',
+                        status: 'waiting',
+                        player: {
+                            id: 'pid1',
+                            name: 'p 1',
+                        },
+                        spectors: 3
+                    }
+                ]
             }
-        }
+        },
+    components: {
+        'game-rules':RulesGame
+    }
 }

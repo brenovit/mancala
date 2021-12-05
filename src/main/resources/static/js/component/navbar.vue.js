@@ -3,14 +3,23 @@ const NavBar = {
   <header>
     <div class="nav-bar">
       <ul>
-        <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/settings">Join Game</router-link></li>
-        <li><router-link to="/">Create Game</router-link> </li>
-        <li><router-link to="/">Your Active Games</router-link></li>
-        <li class="float-right"><a href="#">user-name</a></li>
+        <li><router-link to="/">Home</router-link></li>        
+        <li><router-link to="/create">Create Game</router-link></li>
+        <li><router-link to="/join">Join Game</router-link></li>        
+        <li class="username"><input v-model="userName" placeholder="Add your name here" /><button @click="login">Save</button></li>
       </ul>
     </div>
-    <h1 class="game-name"> Game Name | id Z created by </h1>
+    <h2 class="welcome"> Welcome player name | #id123 </h2>
   </header>
-`
+`,
+data(){
+  return {
+    userName: ''
+  }
+},
+methods: {
+  login(){
+    alert('logged as: '+this.userName);
+  }
+}
 };

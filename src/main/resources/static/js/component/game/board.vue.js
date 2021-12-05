@@ -1,6 +1,6 @@
-const Board = {
+const BoardGame = {
   template: `
-    <div class="board" id="board">
+<div class="board" id="board">
   <div class="section endsection">
     <div class="pot" id="mb"></div>
   </div>
@@ -25,5 +25,6 @@ const Board = {
   <div class="section endsection">
     <div class="pot" id="mt"></div>
   </div>
-</div>`
+</div>
+`
 };

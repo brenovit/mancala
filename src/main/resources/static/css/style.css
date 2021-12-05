@@ -60,7 +60,7 @@ body {
 
 /*MENU BAR CSS */
 /*I just use this for the menu bar on the board.php page. The other one is bootstrap.*/
-ul {
+.nav-bar ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -68,12 +68,12 @@ ul {
   background-color: #333;
 }
 
-li {
+.nav-bar li {
   float: left;
   color: #4caf50;
 }
 
-li a {
+.nav-bar li a {
   display: block;
   color: white;
   text-align: center;
@@ -85,10 +85,10 @@ li a {
   float: right;
 }
 
-li a:hover:not(.active) {
+.nav-bar li a:hover:not(.active) {
   background-color: #111;
 }
 
-.active {
+.nav-bar .active {
   background-color: #4caf50;
 }

@@ -1,4 +1,5 @@
-<template>
+const Board = {
+  template: `
     <div class="board" id="board">
   <div class="section endsection">
     <div class="pot" id="mb"></div>
@@ -24,5 +25,5 @@
   <div class="section endsection">
     <div class="pot" id="mt"></div>
   </div>
-</div>
-</template>
+</div>`
+};

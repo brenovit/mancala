@@ -62,7 +62,7 @@ function Color(r,g,b,a)
 
 function Pot(id_in)
 {
-    console.log('id_in:'+id_in)
+    //console.log('id_in:'+id_in)
   if(!(
     (id_in.charAt(0) === 'p' || id_in.charAt(0) === 'm') &&
     (id_in.charAt(1) === 't' || id_in.charAt(1) === 'b') &&
@@ -240,7 +240,7 @@ var populate_row = function(row)
 var string_out = function(src_pot,last_pot)
 { 
   const children = src_pot.$().children();
-  console.log('children: '+children.length );
+  //console.log('children: '+children.length );
   if(children.length === 0)
   {
     src_pot.$().css("background-color","rgba(255, 255, 255, 0.08)");

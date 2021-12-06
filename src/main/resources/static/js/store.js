@@ -1,7 +1,7 @@
 import { getCurrentUser, setCurrentUser } from "./utils/storage.js"
-import { createStore } from 'vuex'
+import authApi from './api/auth-api.js'
 
-const store = createStore({
+const store = Vuex.createStore({
     state: {
       currentUser: getCurrentUser()
     },
@@ -15,7 +15,7 @@ const store = createStore({
     },
     actions: {
       login({ commit }, payload){
-        authApi.signin(payload.name)
+        authApi.signin(payload)
         .then(
           response => {
             const user = {
@@ -23,7 +23,7 @@ const store = createStore({
               name: response.data.name
             }
             setCurrentUser(user)
-            commit(setUser, user)
+            commit('setUser', user)
           },
           err => {
             console.log(err.message)

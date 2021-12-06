@@ -3,32 +3,37 @@ const NavBar = {
   <header>    
     <div class="nav-bar">
       <ul>
-        <li :class="{ active: isActive('home') }"><router-link to="/">Home</router-link></li>        
-        <li :class="{ active: isActive('create') }"><router-link to="/game/create">Create Game</router-link></li>
-        <li :class="{ active: isActive('join') }"><router-link to="/game/join">Join Game</router-link></li>
-        <li :class="{ active: isActive('about') }"><router-link to="/game/about">About it</router-link></li>
-        <li class="username"><input v-model="userName" placeholder="Add your name here" /><button @click="login">Save</button></li>
+        <li :class="{ active: isActiveRoute('home') }"><router-link to="/">Home</router-link></li>        
+        <li :class="{ active: isActiveRoute('create') }"><router-link to="/game/create">Create Game</router-link></li>
+        <li :class="{ active: isActiveRoute('join') }"><router-link to="/game/join">Join Game</router-link></li>
+        <li :class="{ active: isActiveRoute('about') }"><router-link to="/about">About it</router-link></li>
+        <li class="login"><input v-model="userName" placeholder="Add your name here" /><button @click="login">Save</button></li>
       </ul>
     </div>
-    <h2 class="welcome"> Welcome player name | #id123 </h2>
+    <h2 class="welcome" v-if="currentUser"> Welcome user [{{ currentUser?.name }}] id [{{ currentUser?.id }}] </h2>
   </header>
 `,
-data(){
-  return {
-    userName: ''
+setup(){
+  const userName = Vue.ref("") 
+  const store = Vuex.useStore();
+  const currentUser = Vue.computed(() => store.state.currentUser);
+  const currentRouteName = Vue.computed(() => { return VueRouter.useRoute().name })
+
+  function login(){
+    console.log('login: '+userName.value);
+    store.dispatch('login', userName.value);
+    alert('logged as: '+userName.value);
   }
-},
-computed: {
-  currentRouteName() {
-      return this.$route.name;
-  }
-},
-methods: {
-  login(){
-    alert('logged as: '+this.userName);
-  },
-  isActive(name){
+  function isActiveRoute(name){
     return this.currentRouteName === name;
+  }
+
+  return {
+    userName,
+    currentUser,
+    login,
+    currentRouteName,
+    isActiveRoute
   }
 }
 };

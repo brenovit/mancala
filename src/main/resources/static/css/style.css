@@ -208,7 +208,7 @@ td:nth-child(n + 2):nth-child(odd) {
   text-decoration: none;
 }
 
-.nav-bar .username {
+.nav-bar .login {
   float: right;
   padding-top: 10px;
   padding-right: 10px;

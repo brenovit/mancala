@@ -173,6 +173,9 @@ data(){
     ]
   }
 },
+beforeMount(){
+  this.addPotHandlers()
+},
 methods:{
   abandonGame(){
     if(confirm('If you leave you will lose the game. Are you sure?')){
@@ -211,7 +214,7 @@ methods:{
     var too_close = false;
     dest_pot.$().children().each(function(idx,bead)
     {
-      const pos_bead = read_pos(bead);
+      const pos_bead = this.read_pos(bead);
       if( pos_bead.minus(test_pos).normSq() < dist )
       {
         too_close = true;

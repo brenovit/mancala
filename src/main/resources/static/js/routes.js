@@ -2,11 +2,11 @@ import AuthGuard from "./utils/auth.guard.js";
 
 var routes = [
     { path:'/', component: Home, name: 'home' },
-    { path:'/game', name: 'game', meta: { loginRequired: true },
+    { path:'/game', name: 'game', meta: { loginRequired: true }, component: IndexGame, redirect: { name: 'create'},
         children: [
-            { path:'/join', component: JoinGame, name: 'join' },
-            { path:'/create', component: CreateGame, name: 'create' },
-            { path:'/board', component: BoardGame, name: 'board' }
+            { path:'create', component: CreateGame, name: 'create' },
+            { path:'join', component: JoinGame, name: 'join' },
+            { path:'board', component: BoardGame, name: 'board' }
         ]
     },
     { path:'/about', component: About, name: 'about' }

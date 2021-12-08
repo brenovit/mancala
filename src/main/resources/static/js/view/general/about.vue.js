@@ -1,10 +1,10 @@
 const About = {
     template: `
-    <h1> About id</h1>
+    <h1> About it</h1>
     <div>
-    <p>Board design <a href="https://codepen.io/ChiliTomatoNoodle">Mancala Board</a> from <a href="https://codepen.io/ChiliTomatoNoodle">@ChiliTomatoNoodle</a></p>
-    <p>Logo <a href="https://thenounproject.com/icon/stone-games-3312354/">stone games</a> from <a href="https://thenounproject.com/shmai.com/">Azam Ishaq</a></p>
-    <p>Game logic <a href="https://github.com/brenovit/mancala">brenovit</a></p>
+    <p>Board design <a target="_blank" href="https://codepen.io/ChiliTomatoNoodle/pen/LOaPmy">Mancala Board</a> from <a target="_blank" href="https://codepen.io/ChiliTomatoNoodle">@ChiliTomatoNoodle</a></p>
+    <p>Logo <a target="_blank" href="https://thenounproject.com/icon/stone-games-3312354/">stone games</a> from <a target="_blank" href="https://thenounproject.com/shmai.com/">Azam Ishaq</a></p>
+    <p>Game logic <a target="_blank" href="https://github.com/brenovit/mancala">brenovit</a></p>
     </div>
     `,
     data() {

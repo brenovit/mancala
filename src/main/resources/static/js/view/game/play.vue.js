@@ -1,13 +1,10 @@
 const PlayGame = {
   components:{
-    BoardGameNew,
-    BoardGameOld,
+    BoardGameNew
   },
   template: `
   <div>
-  <board-game-new></board-game-new>
-  <br />
-  <board-game-old></board-game-old>
+  <board-game-new></board-game-new>  
   </div>    
   `,
   data() {

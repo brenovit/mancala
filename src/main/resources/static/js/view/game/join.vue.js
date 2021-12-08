@@ -95,11 +95,11 @@ const JoinGame = {
     methods:{
         joinGame(gameId){
             alert('Joining game '+gameId);
-            this.$router.push('/game/board');
+            this.$router.push('/game/play');
         },
         watchGame(gameId){
             alert('Watching game '+gameId);
-            this.$router.push('/game/board');
+            this.$router.push('/game/play');
         }
     }
 }

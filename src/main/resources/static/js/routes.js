@@ -6,7 +6,7 @@ var routes = [
         children: [
             { path:'create', component: CreateGame, name: 'create' },
             { path:'join', component: JoinGame, name: 'join' },
-            { path:'board', component: BoardGame, name: 'board' }
+            { path:'play', component: PlayGame, name: 'play' }
         ]
     },
     { path:'/about', component: About, name: 'about' }

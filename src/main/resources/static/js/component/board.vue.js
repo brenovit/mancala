@@ -1,173 +1,44 @@
-var pot_center = new Point(30,30);
-var proximity_threshold = 14 * 14;
-var colors = [
-  new Color(255,0,0,0.7), //red
-  new Color(0,255,0,0.7), //green
-  new Color(0,0,255,0.7), //blue
-  new Color(255,255,0,0.7), //yellow
-  //new Color(0,255,255,0.7), //light blue
-  new Color(255,0,255,0.7), //pink
-  new Color(255,255,255,0.7), //white
-  new Color(0,0,0,0.7) //black
-];
-var isTopPlayer = true;
-var pots = 6;
-var size = 6;
-function Point(x,y)
-{
-  this.x = x;
-  this.y = y;
-  this.plus = (p) =>
-  {
-    return new Point(
-      this.x + p.x,
-      this.y + p.y
-    );
-  }
-  this.minus = (p) =>
-  {    
-    return new Point(
-      this.x - p.x,
-      this.y - p.y
-    );
-  }
-  this.normSq = () =>
-  {
-    return x * x + y * y;
-  }
-}
-
-function Color(r,g,b,a)
-{
-  this.r = r;
-  this.g = g;
-  this.b = b;
-  this.a = a;
-  this.toString = () =>
-  {
-    return "rgba("+Math.floor(this.r)+","+Math.floor(this.g)+","+Math.floor(this.b)+","+this.a+")"
-  }
-  this.lerpTo = (dest,alpha) =>
-  {
-    const acomp = 1 - alpha;
-    return new Color(
-      r * acomp + dest.r * alpha,
-      g * acomp + dest.g * alpha,
-      b * acomp + dest.b * alpha,
-      a * acomp + dest.a * alpha
-    );
-  }
-}
-
-function Pot(id_in){
-    //console.log('id_in:'+id_in)
-    if (!(
-      (id_in.charAt(0) === 'p' || id_in.charAt(0) === 'm') &&
-      (id_in.charAt(1) === 't' || id_in.charAt(1) === 'b') &&
-      (id_in.charAt(2) >= 1 || id_in.charAt(2) <= pots))) {
-      throw "invalid id for pot construction";
-    }
-    this.id = id_in;
-    this.isTop = () => { return this.id.charAt(1) === 't'; };
-    this.isBottom = () => { return !isTop(); };
-    this.isMan = () => { return this.id.charAt(0) === 'm'; };
-    this.getSide = () => { return this.id.charAt(1); };
-    this.getOtherSide = () => {
-      if (this.getSide() === 't') {
-        return 'b';
-      }
-      return 't';
-    };
-    this.getNumber = () => { return parseInt(this.id.charAt(2)); };
-    this.getOpposite = () => {
-      if (this.isMan()) {
-        throw "cannot get opposite of mancala pot";
-      }
-      return new Pot("p" + this.getOtherSide() + (7 - this.getNumber()));
-    };
-    this.getNextSown = (isTopPlayer)  =>
-    {
-      if (this.isMan()) {
-        if (this.isTop()) {
-          return new Pot("pb1");
-        }
-
-        else {
-          return new Pot("pt1");
-        }
-      }
-
-      else {
-        if (this.getNumber() === pots) {
-          if (isTopPlayer) {
-            if (this.isTop()) {
-              return new Pot('mt');
-            }
-
-            else {
-              return new Pot('pt1');
-            }
-          }
-
-          else {
-            if (this.isBottom()) {
-              return new Pot('mb');
-            }
-
-            else {
-              return new Pot('pb1');
-            }
-          }
-        }
-
-        else {
-          return new Pot('p' + this.getSide() + (this.getNumber() + 1));
-        }
-      }
-    }
-    this.$ = () =>
-    {
-      return $('#' + this.id);
-    }
-  }
+var hole_center = new Point(40,40);
+var proximity_threshold = 20 * 20;
+var radius = 40;
 
 const BoardGameNew = {
   template: `
   <div clas="row"> 
-  <div clas="col-12">  
-<div class="board" id="board">
-  <div class="section endsection">
-    <div class="pot" id="pit_0"></div>
-  </div>
-  <div class="section midsection">
-    <div class="midrow topmid">
-      <div class="pot" id="pot_t_1" @click=addPotHandlers></div>
-      <div class="pot" id="pot_t_2"></div>
-      <div class="pot" id="pot_t_3"></div>
-      <div class="pot" id="pot_t_4"></div>
-      <div class="pot" id="pot_t_5"></div>
-      <div class="pot" id="pot_t_6"></div>
+    <div clas="col-12">  
+      <div class="board" id="board">
+        <div class="section endsection">
+          <div class="pot" id="h_0"></div>
+        </div>
+        <div class="section midsection">
+          <div class="midrow topmid">
+            <div class="pot" id="h_1" @click="sow"></div>
+            <div class="pot" id="h_2" @click="sow"></div>
+            <div class="pot" id="h_3" @click="sow"></div>
+            <div class="pot" id="h_4" @click="sow"></div>
+            <div class="pot" id="h_5" @click="sow"></div>
+            <div class="pot" id="h_6" @click="sow"></div>
+          </div>
+          <div class="midrow botmid">
+            <div class="pot" id="h_13" @click="sow"></div>
+            <div class="pot" id="h_12" @click="sow"></div>
+            <div class="pot" id="h_11" @click="sow"></div>
+            <div class="pot" id="h_10" @click="sow"></div>
+            <div class="pot" id="h_9" @click="sow"></div>
+            <div class="pot" id="h_8" @click="sow"></div>
+        </div>
+        </div>
+        <div class="section endsection">
+          <div class="pot" id="h_7"></div>
+        </div>
+      </div>
     </div>
-    <div class="midrow botmid">
-      <div class="pot" id="pot_b_13"></div>
-      <div class="pot" id="pot_b_12"></div>
-      <div class="pot" id="pot_b_11"></div>
-      <div class="pot" id="pot_b_10"></div>
-      <div class="pot" id="pot_b_9"></div>
-      <div class="pot" id="pot_b_8"></div>
-    </div>
-  </div>
-  <div class="section endsection">
-    <div class="pot" id="pit_7"></div>
-  </div>
-</div>
-</div>
   </div>
   <div clas="row"> 
-  <div clas="col-12">
-<button @click="abandonGame">Abandon!</button>
-</div>
-</div>
+    <div clas="col-12">
+      <button @click="abandonGame">Abandon!</button>
+    </div>
+  </div>
 
 `,
 data(){
@@ -202,11 +73,11 @@ data(){
           type: 'pit',
           seeds: [
             {
-              color: 'red',
+              color: 1,
               hole: 0
             },
             {
-              color: 'blue',
+              color: 2,
               hole: 0
             },
           ],
@@ -217,15 +88,15 @@ data(){
           type: 'pot', //pit
           seeds: [
             {
-              color: 'red',
+              color: 1,
               hole: 1
             },
             {
-              color: 'blue',
+              color: 2,
               hole: 1
             },
             {
-              color: 'green',
+              color: 0,
               hole: 1
             }
           ],
@@ -236,15 +107,15 @@ data(){
           type: 'pot', //pit
           seeds: [
             {
-              color: 'red',
+              color: 1,
               hole: 1
             },
             {
-              color: 'blue',
+              color: 2,
               hole: 1
             },
             {
-              color: 'green',
+              color: 0,
               hole: 1
             }
           ],
@@ -255,15 +126,34 @@ data(){
           type: 'pot', //pit
           seeds: [
             {
-              color: 'red',
+              color: 1,
               hole: 1
             },
             {
-              color: 'blue',
+              color: 2,
               hole: 1
             },
             {
-              color: 'green',
+              color: 0,
+              hole: 1
+            }
+          ],
+          owner: '123' 
+        },
+        {
+          id: '7',
+          type: 'pit',
+          seeds: [
+            {
+              color: 1,
+              hole: 1
+            },
+            {
+              color: 2,
+              hole: 1
+            },
+            {
+              color: 0,
               hole: 1
             }
           ],
@@ -272,6 +162,11 @@ data(){
       ]
       
     }
+  }
+},
+computed: {
+  getTotalSeeds(event){
+    return event.currentTarget.children.length;
   }
 },
 mounted(){  
@@ -283,21 +178,27 @@ methods:{
       this.$router.push('/');
     }
   },
-  populate_board(){
-    console.log(this.game);
-    const red = this.colors[0];
-    //pt1.., color
+  sow(event){
+    console.log('from pot: '+event.currentTarget.id);
+    console.log('seeds: '+event.currentTarget.children.length);
   },
-  place_new_bead(id,c)
-  {
+  populate_board(){
+    const holes = this.game.board;
+    holes.forEach(h => {
+      h.seeds.forEach(s => {
+        this.place_new_seed(h.id, this.colors[s.color])
+      })
+    })
+  },
+  place_new_seed(id,c) {
     const bead = $("<div>",{"class":"bead"});
     this.setbg_rgba(bead,c);
     const dest_pot = new Pot(id);
     this.position_bead(bead,dest_pot);
     dest_pot.$().append(bead);
   },
-  setbg_rgba(e,c)
-  {
+  //add gradient color effect
+  setbg_rgba(e,c) {
     const hi = c.lerpTo(new Color(255,255,255,0),0.8);
     hi.a = 0.85;
     const lo = c.lerpTo(new Color(0,0,0,0),0.8);
@@ -307,15 +208,19 @@ methods:{
       lo + " 90%)";
     e.css("background-image",grad );
   },
-  read_pos (bead)
-  {
-    return new Point(
-      parseInt($(bead).css("left").slice(0,-2)),
-      parseInt($(bead).css("top").slice(0,-2))
-    );
+  position_bead(bead,dest_pot) {
+    let dsq = proximity_threshold;
+    let done = false;    
+    while(!done) {
+      dsq--;
+      const seed_pos = hole_center.plus(this.generate_pot_offset(radius));
+      if(this.pos_proximity_test(seed_pos,dest_pot,dsq)) {
+        this.set_bead_pos(bead,seed_pos);
+        done = true;
+      }    
+    }
   },
-  generate_pot_offset( radius )
-  {
+  generate_pot_offset( radius ) {
     const theta = Math.PI * (2 * Math.random() - 1);
     const r = radius * Math.random();
     return new Point( 
@@ -323,98 +228,29 @@ methods:{
       Math.floor( r * Math.sin(theta) )
     );
   },
-  pos_proximity_test (test_pos,dest_pot,dist)
-  { 
+  pos_proximity_test (test_pos,dest_pot,dist) { 
     var too_close = false;
+    let _this = this;
     dest_pot.$().children().each(function(idx,bead)
     {
-      const pos_bead = this.read_pos(bead);
-      if( pos_bead.minus(test_pos).normSq() < dist )
-      {
+      const pos_bead = _this.read_pos(bead);
+      if( pos_bead.minus(test_pos).normSq() < dist ) {
         too_close = true;
         return false;
       }
     });
     return !too_close;
   },
-  set_bead_pos(bead,pos)
-  {
+  read_pos (bead) {
+    return new Point(
+      parseInt($(bead).css("left").slice(0,-2)),
+      parseInt($(bead).css("top").slice(0,-2))
+    );
+  },
+  set_bead_pos(bead,pos) {
     $(bead).css( {
       "top":pos.y + "px","left":pos.x + "px"
     } );  
-  },
-  position_bead(bead,dest_pot)
-  {
-    let dsq = proximity_threshold;
-    let done = false;
-    while( !done )
-    {
-      dsq--;
-      const cand_pos = pot_center.plus( 
-        this.generate_pot_offset( 25 )
-      );
-      if(this.pos_proximity_test(cand_pos,dest_pot,dsq))
-      {
-        this.set_bead_pos(bead,cand_pos);
-        done = true;
-      }    
-    }
-  },
-  move_bead(bead,dest_pot)
-  {
-    this.position_bead(bead,dest_pot);  
-    $(bead).appendTo(dest_pot.$());
-  },  
-  populate_row(row)
-  {
-    let n = 0;
-    for(let c = 0; c < size; c++)
-    {
-      for(let i = 1; i <= pots; i++,n++)
-      {
-        this.place_new_bead(row + i,colors[c]);
-      }
-    }
-  },
-  string_out(src_pot,last_pot)
-  { 
-    const children = src_pot.$().children();
-    //console.log('children: '+children.length );
-    if(children.length === 0)
-    {
-      src_pot.$().css("background-color","rgba(255, 255, 255, 0.08)");
-      this.addPotHandlers();
-      return;
-    }
-    if(last_pot === undefined)
-    {
-      last_pot = src_pot;
-    }
-    const el = children.get(0);
-    last_pot = last_pot.getNextSown(true);
-    // steal
-    if(children.length == 1 &&
-      isTopPlayer === last_pot.isTop() &&
-      last_pot.$().children().length === 0 &&
-      !last_pot.isMan())
-    {
-      last_pot.getOpposite().$().children().each(function(idx,el_steal)
-      {
-        this.move_bead(el_steal,new Pot('mt'));
-      });    
-      this.move_bead(el,new Pot('mt'));
-    }
-    else
-    {
-      this.move_bead(el,last_pot);
-    }
-    setTimeout(string_out,0,src_pot,last_pot)
-  },
-  addPotHandlers()
-  {
-    console.log('addPotHandler')
-      this.string_out(new Pot($(this).attr("id")));
-      isTopPlayer = !isTopPlayer;
   }
 }
 };

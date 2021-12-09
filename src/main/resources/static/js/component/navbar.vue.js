@@ -1,6 +1,5 @@
 const NavBar = {
-  template: `  
-  <header>    
+  template: `
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <router-link class="navbar-brand" to="/">
         <img src="images/logo2.png" height="50"/>
@@ -15,10 +14,10 @@ const NavBar = {
             <router-link class="nav-link" to="/">Home</router-link>
           </li>
           <li class="nav-item" v-bind:class="{ active: isActiveRoute('create') }">
-            <router-link class="nav-link" v-bind:class="{ disabled: isNotLogged() }"  to="/game/create">Create Game</router-link>
+            <router-link class="nav-link" v-bind:disabled="isNotLogged"  to="/game/create">Create Game</router-link>
           </li>
           <li class="nav-item" v-bind:class="{ active: isActiveRoute('join') }">
-            <router-link class="nav-link" v-bind:class="{ disabled: isNotLogged() }"  to="/game/join">Join Game</router-link>
+            <router-link class="nav-link" v-bind:disabled="isNotLogged"  to="/game/join">Join Game</router-link>
           </li>
           <li class="nav-item" v-bind:class="{ active: isActiveRoute('about') }">
             <router-link class="nav-link" to="/about">About it</router-link>
@@ -26,45 +25,42 @@ const NavBar = {
         </ul>
         <form class="form-inline mt-2 mt-md-0">
           <input class="form-control mr-sm-2" type="text" v-model="userName" placeholder="Add your name here" aria-label="Login">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="button" @click="login">Login</button>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="button" @click="login" v-bind:disabled="!isNotLogged">Login</button>
         </form>
       </div>
-    </nav>
-    <br />
-    <h2 class="welcome" v-if="currentUser"> Welcome user [{{ currentUser?.name }}] id [{{ currentUser?.id }}] </h2>
-  </header>
+    </nav>  
   `,
   data() {
     return {
-
+      userName: ''
     }
   },
-  setup(){
-    const store = Vuex.useStore();
-    const currentUser = Vue.computed(() => store.state.currentUser);
-    const currentRouteName = Vue.computed(() => { return VueRouter.useRoute().name })
-    let userName = Vue.ref("");
-    
-    function login(){
-      store.dispatch('login', userName.value);
-      alert('logged as: '+userName.value);
-    }
-
-    function isActiveRoute(name){
-      return currentRouteName === name;
-    }
-
-    function isNotLogged(){
-      return currentUser === null || currentUser === undefined;
-    }
-
-    return {
-      userName,
-      currentUser,
-      login,
-      currentRouteName,
-      isActiveRoute,
-      isNotLogged
+  mounted() {
+    this.loadUserName();
+  },
+  computed: {
+    currentUser(){
+      return this.$store.state.currentUser;
+    },
+    currentRouteName(){
+      return VueRouter.useRoute().name;
+    },
+    isNotLogged(){
+      return this.currentUser === null || this.currentUser === undefined;
+    },
+  },
+  methods: {
+    login(){
+      this.$store.dispatch('login', this.userName);
+      alert('logged as: '+this.userName);
+    },
+    isActiveRoute(name){
+      return this.currentRouteName === name;
+    },
+    loadUserName(){
+      if(!this.isNotLogged){
+        this.userName = this.currentUser.name;
+      }
     }
   }
 };

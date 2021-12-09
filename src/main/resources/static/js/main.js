@@ -8,6 +8,8 @@ const app = Vue.createApp({
 });
 
 app.component('nav-bar', NavBar);
+app.component('welcome-message', WelcomeMessage);
+app.component('footer-message', FooterMessage);
 
 app.use(router);
 app.use(store);

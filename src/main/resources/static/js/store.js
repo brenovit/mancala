@@ -11,6 +11,9 @@ const store = Vuex.createStore({
     mutations: {
       setUser(state, payload){
         state.currentUser = payload
+      },
+      setLogout(state) {
+        state.currentUser = null
       }
     },
     actions: {
@@ -30,7 +33,11 @@ const store = Vuex.createStore({
             setCurrentUser(null)
           }
         )
-      }      
+      },
+      logout({ commit }){
+        setCurrentUser(null)
+        commit('setUser')
+      }
     }
 })
 

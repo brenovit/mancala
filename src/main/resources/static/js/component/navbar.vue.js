@@ -23,9 +23,16 @@ const NavBar = {
             <router-link class="nav-link" to="/about">About it</router-link>
           </li>
         </ul>
-        <form class="form-inline mt-2 mt-md-0">
-          <input class="form-control mr-sm-2" type="text" v-model="userName" placeholder="Add your name here" aria-label="Login">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="button" @click="login" v-bind:disabled="!isNotLogged">Login</button>
+        <form class="form-inline mt-2 mt-md-0" @submit.prevent="login">
+          <template v-if="isNotLogged">
+            <input class="form-control mr-sm-1" type="text" v-model="userName" placeholder="Add your name here" aria-label="Login" v-on:keyup.enter="login" v-bind:disabled="!isNotLogged"/>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-bind:disabled="!isNotLogged">Login</button>
+          </template>
+          <template v-else>
+            <input class="form-control mr-sm-2" type="text" :value="currentUser?.id" aria-label="userid" readonly/>
+            <input class="form-control mr-sm-2" type="text" :value="currentUser?.name" aria-label="username" readonly/>
+            <button class="btn btn-outline-danger my-2 my-sm-0" type="button" @click="logout" v-bind:disabled="isNotLogged">Logout</button>
+          </template>
         </form>
       </div>
     </nav>  
@@ -51,8 +58,11 @@ const NavBar = {
   },
   methods: {
     login(){
-      this.$store.dispatch('login', this.userName);
-      alert('logged as: '+this.userName);
+      this.$store.dispatch('login', this.userName);      
+    },
+    logout(){
+      this.userName = '';
+      this.$store.dispatch('logout');
     },
     isActiveRoute(name){
       return this.currentRouteName === name;

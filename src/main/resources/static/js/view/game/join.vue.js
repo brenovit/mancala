@@ -1,5 +1,7 @@
 const JoinGame = {
-    template: `    
+    template: `
+    <h1>Join Game</h1>
+    <hr />
     <table>
         <thead>
             <th>#</th>
@@ -13,212 +15,72 @@ const JoinGame = {
 
         <tbody>
             <tr v-for="(game,index) in games" :key="game.id">
-            <td data-label="player name">{{index}}</td>
-            <td data-label="player name">{{game.id}}</td>
-            <td data-label="player name">{{game.player.name}}</td>
-            <td data-label="game name">{{game.name}}</td>
-            <td data-label="game status">{{game.status}}</td>
-            <td data-label="spectors">{{game.spectors}}</td>
-            <td data-label="action"><button @click="joinGame(game.id)">Join</button>|<button @click="watchGame(game.id)">Watch</button></td>
+                <td data-label="#">{{index}}</td>
+                <td data-label="player name">{{game.player1.name}}</td>
+                <td data-label="game id">{{game.id}}</td>
+                <td data-label="game name">{{game.name}}</td>
+                <td data-label="game status">{{game.status}}</td>
+                <td data-label="spectors">{{game.watchers?.length}}</td>
+                <td data-label="action">
+                    <template v-if="isGameNotFinished(game)">
+                        <button @click="joinGame(game.id)" class="btn btn-success btn-sm"><i class="bi-joystick"></i> Play</button>&nbsp;
+                        <button @click="watchGame(game.id)" class="btn btn-info btn-sm"><i class="bi-eye"></i> Watch</button>
+                    </template>
+                </td>
             </tr>
         </tbody>
 
     </table>
     `,
     data() {
-            return {
-                games: [
-                    {
-                        id: 'gid1',
-                        name: 'test game',
-                        status: 'waiting',
-                        player: {
-                            id: 'pid1',
-                            name: 'p 1',
-                        },
-                        spectors: 3
-                    },
-                    {
-                        id: 'gid2',
-                        name: 'test game 2',
-                        status: 'waiting',
-                        player: {
-                            id: 'pid2',
-                            name: 'p 2',
-                        },
-                        spectors: 0
-                    },
-                    {
-                        id: 'gid3',
-                        name: 'test game 3',
-                        status: 'in progress',
-                        player: {
-                            id: 'pid3',
-                            name: 'p 3',
-                        },
-                        spectors: 9
-                    },
-                    {
-                        id: 'gid4',
-                        name: 'test game4',
-                        status: 'waiting',
-                        player: {
-                            id: 'pid1',
-                            name: 'p 1',
-                        },
-                        spectors: 3
-                    },
-                    {
-                        id: 'gid5',
-                        name: 'test game 5',
-                        status: 'waiting',
-                        player: {
-                            id: 'pid2',
-                            name: 'p 2',
-                        },
-                        spectors: 0
-                    },
-                    {
-                        id: 'gid6',
-                        name: 'test game 6',
-                        status: 'in progress',
-                        player: {
-                            id: 'pid3',
-                            name: 'p 3',
-                        },
-                        spectors: 9
-                    },
-                    {
-                        id: 'gid1',
-                        name: 'test game',
-                        status: 'waiting',
-                        player: {
-                            id: 'pid1',
-                            name: 'p 1',
-                        },
-                        spectors: 3
-                    },
-                    {
-                        id: 'gid2',
-                        name: 'test game 2',
-                        status: 'waiting',
-                        player: {
-                            id: 'pid2',
-                            name: 'p 2',
-                        },
-                        spectors: 0
-                    },
-                    {
-                        id: 'gid3',
-                        name: 'test game 3',
-                        status: 'in progress',
-                        player: {
-                            id: 'pid3',
-                            name: 'p 3',
-                        },
-                        spectors: 9
-                    },
-                    {
-                        id: 'gid4',
-                        name: 'test game4',
-                        status: 'waiting',
-                        player: {
-                            id: 'pid1',
-                            name: 'p 1',
-                        },
-                        spectors: 3
-                    },
-                    {
-                        id: 'gid5',
-                        name: 'test game 5',
-                        status: 'waiting',
-                        player: {
-                            id: 'pid2',
-                            name: 'p 2',
-                        },
-                        spectors: 0
-                    },
-                    {
-                        id: 'gid6',
-                        name: 'test game 6',
-                        status: 'in progress',
-                        player: {
-                            id: 'pid3',
-                            name: 'p 3',
-                        },
-                        spectors: 9
-                    },
-                    {
-                        id: 'gid1',
-                        name: 'test game',
-                        status: 'waiting',
-                        player: {
-                            id: 'pid1',
-                            name: 'p 1',
-                        },
-                        spectors: 3
-                    },
-                    {
-                        id: 'gid2',
-                        name: 'test game 2',
-                        status: 'waiting',
-                        player: {
-                            id: 'pid2',
-                            name: 'p 2',
-                        },
-                        spectors: 0
-                    },
-                    {
-                        id: 'gid3',
-                        name: 'test game 3',
-                        status: 'in progress',
-                        player: {
-                            id: 'pid3',
-                            name: 'p 3',
-                        },
-                        spectors: 9
-                    },
-                    {
-                        id: 'gid4',
-                        name: 'test game4',
-                        status: 'waiting',
-                        player: {
-                            id: 'pid1',
-                            name: 'p 1',
-                        },
-                        spectors: 3
-                    },
-                    {
-                        id: 'gid5',
-                        name: 'test game 5',
-                        status: 'waiting',
-                        player: {
-                            id: 'pid2',
-                            name: 'p 2',
-                        },
-                        spectors: 0
-                    },
-                    {
-                        id: 'gid6',
-                        name: 'test game 6',
-                        status: 'in progress',
-                        player: {
-                            id: 'pid3',
-                            name: 'p 3',
-                        },
-                        spectors: 9
-                    }
-                ]
-            }
-        },
+        return {
+            games: []
+        }
+    },
+    mounted() {
+        this.findGames();
+    },
     methods:{
+        findGames(){
+            gameApi.findAll()
+            .then(r => {
+                this.games = r.data;
+            })
+            .catch(e => {
+                alert(e);
+                console.error(e);
+            });
+        },
+        isGameNotFinished(game){
+            return game.status !== "FINISHED";
+        },
         joinGame(gameId){
-            alert('Joining game '+gameId);
-            this.$router.push('/game/play');
+            const request = {
+                gameId,
+                player: this.$store.state.currentUser
+            }
+            gameApi.join(request)
+            .then(r => {
+                this.$router.push('/game/play/'+gameId);
+            })
+            .catch(e => {
+                alert(e.response?.data?.code + " : "+e.response?.data?.message);
+                console.error(e?.response?.data);
+            });
         },
         watchGame(gameId){
-            alert('Watching game '+gameId);
-            this.$router.push('/game/play');
+            const request = {
+                gameId,
+                player: this.$store.state.currentUser
+            }
+            gameApi.spectate(request)
+            .then(r => {
+                this.$router.push('/game/play/'+gameId);
+            })
+            .catch(e => {
+                alert(e.response.data.code + " : "+e.response.data.message);
+                console.error(e.response.data);
+            });
         }
     }
 }

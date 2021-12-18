@@ -10,8 +10,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
     <title>Kalah/Mancala BNA</title>
-    <!-- libs for stomp and sockjs -->
+    <!-- bootstrap-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.min.css">
     <!-- bootstrap-->
     <link href="css/style.css" rel="stylesheet"></link>
 </head>
@@ -20,15 +21,16 @@
       <app></app>
   </div>
 
-<!-- libs for stomp and sockjs-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+<!-- libs for connection (stomp, sockjs, axios) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<!-- end libs for stomp and sockjs-->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- end for connection (stomp, sockjs, axios) -->
 
 <!-- libs for vue-->
-<script src="https://unpkg.com/vue@3.2.23"></script>
-<script src="https://unpkg.com/vue-router@4.0.5/dist/vue-router.global.js"></script>
-<script src="https://unpkg.com/vuex@4.0.0/dist/vuex.global.js"></script>
+<script src="https://unpkg.com/vue@3.2.23/dist/vue.global.prod.js"></script>
+<script src="https://unpkg.com/vue-router@4.0.5/dist/vue-router.global.prod.js"></script>
+<script src="https://unpkg.com/vuex@4.0.0/dist/vuex.global.prod.js"></script>
 <!-- end libs for vue-->
 
 <!-- libs for bootstrap-->
@@ -39,12 +41,15 @@
 <script src="https://unpkg.com/uuid@latest/dist/umd/uuidv4.min.js"></script>
 
 <!-- scripts for app-->
+<script src="js/utils/const.js"></script>
+
+<script src="js/api/api.js"></script>
+
 <script src="js/component/navbar.vue.js"></script>
-<script src="js/component/welcome-message.vue.js"></script>
 <script src="js/component/footer-message.vue.js"></script>
 
 <script src="js/component/game.color.js"></script>
-<script src="js/component/game.hole.js"></script>
+<script src="js/component/game.pot.js"></script>
 <script src="js/component/game.point.js"></script>
 <script src="js/component/board.vue.js"></script>
 
@@ -59,9 +64,7 @@
 <script src="js/view/general/about.vue.js"></script>
 <script src="js/view/general/home.vue.js"></script>
 
-<script type="module" src="js/api/api.js"></script>
 <script type="module" src="js/api/auth-api.js"></script>
-<script type="module" src="js/api/game-api.js"></script>
 
 <script type="module" src="js/store.js"></script>
 

@@ -4,7 +4,6 @@ const App = {
         <nav-bar></nav-bar>
     </header>    
     <main role="main" class="flex-shrink-0">
-        <welcome-message></welcome-message>
         <div class="container">
             <router-view></router-view>
         </div>
